@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Screens/AddDemande.dart';
 import 'package:gestpersonnel/Screens/Home.dart';
+import 'package:gestpersonnel/Screens/ListDemandes.dart';
 import 'package:motion_tab_bar/MotionTabBarView.dart';
 import 'package:motion_tab_bar/MotionTabController.dart';
 import 'package:motion_tab_bar/motiontabbar.dart';
@@ -33,27 +34,23 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
         bottomNavigationBar: MotionTabBar(
-          labels: ["Account", "Home", "Profil"],
-          initialSelectedTab: "Home",
-          tabIconColor: Colors.teal[900],
-          tabSelectedColor: Colors.teal[900],
+          labels: ["Liste", "Demande", "Profil"],
+          initialSelectedTab: "Demande",
+          tabIconColor: Colors.green[400],
+          tabSelectedColor: Colors.green[400],
           onTabItemSelected: (int value) {
-            print(value);
+            // print(value);
             setState(() {
               _tabController.index = value;
             });
           },
-          icons: [Icons.book, Icons.add, Icons.home_filled],
-          textStyle: TextStyle(color: Colors.teal[900]),
+          icons: [Icons.menu, Icons.add, Icons.home_filled],
+          textStyle: TextStyle(color: Colors.green[400]),
         ),
         body: MotionTabBarView(
           controller: _tabController,
           children: <Widget>[
-            Container(
-              child: Center(
-                child: Text("Account"),
-              ),
-            ),
+            ListDemandes(),
             AddDemande(),
             HomeScreen(),
           ],

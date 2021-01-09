@@ -9,7 +9,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green[200],
+      backgroundColor: Colors.green[400],
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -134,14 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: [
                       Text('OverView',
                           style: TextStyle(
-                              color: Colors.teal[900],
+                              color: Colors.white,
                               fontSize: 25,
                               fontWeight: FontWeight.bold)),
                       Text(
                         'sept, 13 2020',
                         style: TextStyle(
-                            color: Colors.teal[900],
-                            fontWeight: FontWeight.bold),
+                            color: Colors.white, fontWeight: FontWeight.bold),
                       )
                     ],
                   ),
@@ -164,11 +163,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 50,
                                 width: 50,
                                 decoration: BoxDecoration(
-                                    color: Colors.green[200],
+                                    color: Colors.green[400],
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Icon(
                                   Icons.my_library_books,
-                                  color: Colors.teal[900],
+                                  color: Colors.white,
                                 ),
                               ),
                               title: Text('Vos Demandes',
@@ -199,11 +198,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 50,
                                 width: 50,
                                 decoration: BoxDecoration(
-                                    color: Colors.green[200],
+                                    color: Colors.green[400],
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Icon(
                                   Icons.check_box,
-                                  color: Colors.teal[900],
+                                  color: Colors.white,
                                 ),
                               ),
                               title: Text('Demande Acceptée',
@@ -234,10 +233,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 50,
                                 width: 50,
                                 decoration: BoxDecoration(
-                                    color: Colors.green[200],
+                                    color: Colors.green[400],
                                     borderRadius: BorderRadius.circular(10)),
-                                child:
-                                    Icon(Icons.close, color: Colors.teal[900]),
+                                child: Icon(Icons.close, color: Colors.white),
                               ),
                               title: Text('Demande Refusées',
                                   style: TextStyle(
