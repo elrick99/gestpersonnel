@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gestpersonnel/Screens/AddDemande.dart';
-import 'package:gestpersonnel/Screens/Home.dart';
-import 'package:gestpersonnel/Screens/ListDemandes.dart';
+import 'package:gestpersonnel/Screens/Client/AddDemande.dart';
+import 'package:gestpersonnel/Screens/Client/Home.dart';
+import 'package:gestpersonnel/Screens/Client/ListDemandes.dart';
 import 'package:motion_tab_bar/MotionTabBarView.dart';
 import 'package:motion_tab_bar/MotionTabController.dart';
 import 'package:motion_tab_bar/motiontabbar.dart';

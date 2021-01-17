@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gestpersonnel/Screens/BotttomBar.dart';
+import 'package:gestpersonnel/Screens/Client/Connexion.dart';
+import 'package:gestpersonnel/Screens/Client/BotttomBar.dart';
 
 void main() {
   runApp(MyApp());
@@ -28,8 +29,8 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      // home: HomeScreen(),
-      home: BottomBar(),
+      home: Connexion(),
+      // home: BottomBar(),
     );
   }
 }

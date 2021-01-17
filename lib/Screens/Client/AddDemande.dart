@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gestpersonnel/Widgets/DropDownMenu.dart';
 
 enum TypeOptions { Particulier, Createur, Bloggeur, VenderPro }
 
@@ -88,20 +89,7 @@ class _AddDemandeState extends State<AddDemande> {
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               border: Border.all(color: Colors.green[400])),
-                          child: TextFormField(
-                            onChanged: (String val) {
-                              setState(() {
-                                titreDemande = val;
-                              });
-                            },
-                            style: TextStyle(color: Colors.teal[900]),
-                            decoration: InputDecoration(
-                              focusedBorder: InputBorder.none,
-                              enabledBorder: InputBorder.none,
-                              border: UnderlineInputBorder(),
-                            ),
-                            maxLines: 1,
-                          ),
+                          child: DropDownMenu(),
                         ),
                       ],
                     ),

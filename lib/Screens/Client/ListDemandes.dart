@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gestpersonnel/Screens/DetailDemandes.dart';
+import 'package:gestpersonnel/Screens/Client/DetailDemandes.dart';
 
 class ListDemandes extends StatefulWidget {
   @override
