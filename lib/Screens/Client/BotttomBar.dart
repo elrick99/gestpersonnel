@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Screens/Client/AddDemande.dart';
 import 'package:gestpersonnel/Screens/Client/Home.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandes.dart';
 import 'package:motion_tab_bar/MotionTabBarView.dart';
 import 'package:motion_tab_bar/MotionTabController.dart';
 import 'package:motion_tab_bar/motiontabbar.dart';
+import 'package:provider/provider.dart';
+import 'package:gestpersonnel/Providers/Services/Permissionss.dart';
 
 class BottomBar extends StatefulWidget {
   BottomBar({Key key, this.title}) : super(key: key);
@@ -32,6 +35,13 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    final providerPermission = Provider.of<Permissionss>(context);
+    DBProvider.db.getAllEmploye();
+    if (DBProvider.db.itemEmploye != null) {
+      providerPermission.getPermission(
+          idEmploye: DBProvider.db.itemEmploye[0].matricule);
+    }
+
     return Scaffold(
         bottomNavigationBar: MotionTabBar(
           labels: ["Liste", "Demande", "Profil"],
@@ -44,7 +54,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
               _tabController.index = value;
             });
           },
-          icons: [Icons.menu, Icons.add, Icons.home_filled],
+          icons: [Icons.menu, Icons.add, Icons.person],
           textStyle: TextStyle(color: Colors.green[400]),
         ),
         body: MotionTabBarView(

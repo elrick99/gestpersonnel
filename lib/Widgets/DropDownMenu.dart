@@ -9,7 +9,7 @@ class DropDownMenu extends StatefulWidget {
 
 /// This is the private State class that goes with DropDownMenu.
 class _DropDownMenuState extends State<DropDownMenu> {
-  String dropdownValue = 'One';
+  static String dropdownValue = 'One';
 
   @override
   Widget build(BuildContext context) {

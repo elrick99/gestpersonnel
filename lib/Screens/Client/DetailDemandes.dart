@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gestpersonnel/Providers/Models/Permission.dart';
 
 class DetailsDemandes extends StatefulWidget {
+  final Permission permission;
+
+  const DetailsDemandes({Key key, this.permission}) : super(key: key);
   @override
   _DetailsDemandesState createState() => _DetailsDemandesState();
 }
@@ -13,7 +17,7 @@ class _DetailsDemandesState extends State<DetailsDemandes> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.green[400]),
         title: Text(
-          "Details Demandes",
+          "Details Demande",
           style: TextStyle(color: Colors.green[400]),
         ),
       ),
@@ -42,11 +46,11 @@ class _DetailsDemandesState extends State<DetailsDemandes> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text('Jour',
+                                Text(widget.permission.createdAt.split(' ')[0],
                                     style: TextStyle(
                                         fontFamily: "LTReponse Rounded",
                                         fontWeight: FontWeight.bold)),
-                                Text('heure',
+                                Text(widget.permission.createdAt.split(' ')[1],
                                     style: TextStyle(
                                         fontFamily: "LTReponse Rounded",
                                         fontWeight: FontWeight.bold))
@@ -56,7 +60,7 @@ class _DetailsDemandesState extends State<DetailsDemandes> {
                         ),
                       ),
                       Text(
-                        "Titre de la Demande",
+                        widget.permission.idMotif,
                         style: TextStyle(
                           fontSize: 20,
                           fontFamily: "LTReponse Rounded",
@@ -80,7 +84,7 @@ class _DetailsDemandesState extends State<DetailsDemandes> {
                           scrollDirection: Axis.vertical,
                           children: [
                             Text(
-                              "Motif de la Demande",
+                              widget.permission.description,
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 17,
@@ -95,7 +99,7 @@ class _DetailsDemandesState extends State<DetailsDemandes> {
                               height: 10,
                             ),
                             Text(
-                              "Date Debut - Date Fin",
+                              "${widget.permission.datePermission} - ${widget.permission.dateAutorisation}",
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                   fontSize: 17,
@@ -123,9 +127,9 @@ class _DetailsDemandesState extends State<DetailsDemandes> {
                       style: TextStyle(fontSize: 18),
                     ),
                     Text(
-                      'Refusé',
+                      'En Attente',
                       style: TextStyle(
-                          color: Colors.red,
+                          color: Colors.amber,
                           fontWeight: FontWeight.bold,
                           fontSize: 18),
                     ),
