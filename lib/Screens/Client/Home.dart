@@ -3,6 +3,7 @@ import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandes.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandesAccept.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandesRefu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -62,7 +63,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                     IconButton(
                                       icon: Icon(Icons.more_vert,
                                           color: Colors.green[400]),
-                                      onPressed: () {},
+                                      onPressed: () async {
+                                        final prefs = await SharedPreferences
+                                            .getInstance();
+                                        var pseudo = prefs.setString(
+                                            'my_Matricule', null);
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                          'connexion',
+                                          (Route<dynamic> route) => false,
+                                        );
+                                      },
                                     )
                                   ],
                                 ),

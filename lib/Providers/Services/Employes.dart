@@ -21,6 +21,9 @@ class Employes with ChangeNotifier {
       if (response.statusCode == 200) {
         _items = [];
         // print('////////// Insérer dans le provider /////////');
+        // if (response.data['status'] == 0) {
+        //   return false;
+        // }
         (response.data as List).map((employee) {
           // print(response.data);
           _items.add(Employe.fromJson(employee));

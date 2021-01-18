@@ -47,8 +47,9 @@ class MyApp extends StatelessWidget {
         home: MyHomePage(),
         routes: {
           'bottomBar': (context) => BottomBar(),
+          'connexion': (context) => Connexion(),
         },
-        // home: BottomBar(),
+        // home: Connexion(),
       ),
     );
   }
