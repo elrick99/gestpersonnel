@@ -36,11 +36,8 @@ class Employes with ChangeNotifier {
           print(data);
           DBProvider.db.createParent(Employe.fromJson(data));
           return true;
-        } else {
-          print('////////// Existe pas /////////');
-          print(_items.length);
-          return false;
         }
+        return false;
       }
     } catch (e) {
       print(e);

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Services/Employes.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 
 class Connexion extends StatefulWidget {
   @override
@@ -43,6 +44,7 @@ class _ConnexionState extends State<Connexion> {
   @override
   Widget build(BuildContext context) {
     final providerEmploye = Provider.of<Employes>(context);
+    DBProvider.db.getAllEmploye();
     // providerEmploye.geParents();
     return Scaffold(
       body: Container(
@@ -53,6 +55,7 @@ class _ConnexionState extends State<Connexion> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              Text(DBProvider.db.itemEmploye?.length.toString()),
               Padding(
                 padding: const EdgeInsets.all(50.0),
                 child: Container(
@@ -146,6 +149,8 @@ class _ConnexionState extends State<Connexion> {
                                   ),
                                 ),
                                 onPressed: () {
+                                  DBProvider.db.getAllEmploye();
+                                  DBProvider.db.deleteAllEmploye();
                                   if (validateSaved()) {
                                     var parent = providerEmploye
                                         .getEmploye(_myMatricule, _myPassword)
@@ -159,11 +164,11 @@ class _ConnexionState extends State<Connexion> {
                                           loaded = true;
                                           result = true;
                                         });
-                                        Navigator.of(context)
-                                            .pushNamedAndRemoveUntil(
-                                          'bottomBar',
-                                          (Route<dynamic> route) => false,
-                                        );
+                                        // Navigator.of(context)
+                                        //     .pushNamedAndRemoveUntil(
+                                        //   'bottomBar',
+                                        //   (Route<dynamic> route) => false,
+                                        // );
                                       } else {
                                         setState(() {
                                           info = true;

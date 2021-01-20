@@ -68,6 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .getInstance();
                                         var pseudo = prefs.setString(
                                             'my_Matricule', null);
+                                        DBProvider.db.deleteAllEmploye();
                                         Navigator.of(context)
                                             .pushNamedAndRemoveUntil(
                                           'connexion',
