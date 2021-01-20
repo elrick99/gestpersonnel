@@ -12,9 +12,9 @@ class Employes with ChangeNotifier {
    * GET Produit
    */
 
-  Future<bool> getEmploye(String matricule, String password) async {
+  Future<void> getEmploye({String matricule, String password}) async {
     final String url =
-        "https://educas-nsa.net/kouassi/testGestPersonel/Employes.php?matricule=$matricule&mp=$password";
+        "https://educas-nsa.net/kouassi/testGestPersonel/Employes.php";
     try {
       var data;
       Response response = await Dio().get(url);
@@ -27,17 +27,11 @@ class Employes with ChangeNotifier {
         (response.data as List).map((employee) {
           // print(response.data);
           _items.add(Employe.fromJson(employee));
+          // print(_items.length);
           data = employee;
         }).toList();
 
-        // notifyListeners();
-        if (_items.length != 0) {
-          print('////////// Existe /////////');
-          print(data);
-          DBProvider.db.createParent(Employe.fromJson(data));
-          return true;
-        }
-        return false;
+        notifyListeners();
       }
     } catch (e) {
       print(e);
@@ -50,13 +44,26 @@ class Employes with ChangeNotifier {
         orElse: () => null);
   }
 
-  bool wheremail(String telephone, String password) {
-    var element = _items
-        .where((element) =>
-            element.matricule == telephone && element.password == password)
-        .toList()
-        .isEmpty;
-    return element;
+  Employe wheremail(String telephone, String password) {
+    // print(telephone);
+    var data = _items.firstWhere(
+        (element) =>
+            element.matricule == telephone && element.password == password,
+        orElse: () => null);
+    // print(data);
+    return data;
+    // if (data == null) {
+    //   return false;
+    // } else {
+    //   return true;
+    // }
+
+    // var element = _items
+    //     .where((element) =>
+    //         element.matricule == telephone && element.password == password)
+    //     .toList()
+    //     .isEmpty;
+    // return element;
     // print(element);
     // return _item.firstWhere((boutique) => boutique.user.nom == email);
   }
