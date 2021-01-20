@@ -79,13 +79,13 @@ class DBProvider {
     await deleteAllEmploye();
     final db = await database;
     final res = await db.insert('Employe', newParent.toJson());
-    final ress = await db.rawQuery("SELECT * FROM Employe ");
+    final ress = await db.rawQuery("SELECT * FROM Employe");
 
     Employe list =
         ress.isNotEmpty ? ress.map((c) => Employe.fromJson(c)).first : null;
 
-    print("//////////LIST////////");
-    print(list);
+    // print("//////////LIST////////");
+    // print(list);
     return res;
   }
 
@@ -93,13 +93,13 @@ class DBProvider {
     await deleteAllPermissions();
     final db = await database;
     final res = await db.insert('Permissions', newParent.toJson());
-    final ress = await db.rawQuery("SELECT * FROM Permissions ");
+    final ress = await db.rawQuery("SELECT * FROM Permissions");
 
     Permission list =
         ress.isNotEmpty ? ress.map((c) => Permission.fromJson(c)).first : null;
 
-    print("//////////LIST////////");
-    print(list);
+    // print("//////////LIST////////");
+    // print(list);
     return res;
   }
 
@@ -171,8 +171,8 @@ class DBProvider {
     List<Employe> list =
         res.isNotEmpty ? res.map((c) => Employe.fromJson(c)).toList() : null;
     _itemEmploye = list;
-    print('////////// LISTE MESSAGES RECU /////////');
-    print(list);
+    // print('////////// LISTE MESSAGES RECU /////////');
+    // print(list);
     return list;
   }
 
@@ -183,8 +183,8 @@ class DBProvider {
     List<Permission> list =
         res.isNotEmpty ? res.map((c) => Permission.fromJson(c)).toList() : null;
     _itemPermission = list;
-    print('////////// LISTE Permissions RECU /////////');
-    print(list);
+    // print('////////// LISTE Permissions RECU /////////');
+    // print(list);
     return list;
   }
 

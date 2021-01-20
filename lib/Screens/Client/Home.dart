@@ -68,7 +68,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             .getInstance();
                                         var pseudo = prefs.setString(
                                             'my_Matricule', null);
+
                                         DBProvider.db.deleteAllEmploye();
+                                        DBProvider.db.deleteAllPermissions();
                                         Navigator.of(context)
                                             .pushNamedAndRemoveUntil(
                                           'connexion',
@@ -119,8 +121,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         children: [
                                           Text(
                                               DBProvider
-                                                  .db.itemPermission?.length
-                                                  .toString(),
+                                                      .db.itemPermission?.length
+                                                      .toString() ??
+                                                  0.toString(),
                                               style: TextStyle(
                                                   color: Colors.teal[900],
                                                   fontSize: 20,
@@ -242,7 +245,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       subtitle: Text("Liste de Vos Demandes"),
                                       trailing: Text(
                                           DBProvider.db.itemPermission?.length
-                                              .toString(),
+                                                  .toString() ??
+                                              0.toString(),
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 15,
