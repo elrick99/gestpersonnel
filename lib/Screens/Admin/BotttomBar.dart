@@ -39,10 +39,10 @@ class _BottomBarAdminState extends State<BottomBarAdmin>
   Widget build(BuildContext context) {
     final providerPermission = Provider.of<Permissionss>(context);
     DBProvider.db.getAllSuperviseur();
-    if (DBProvider.db.itemEmploye != null) {
-      providerPermission.getPermission(
-          idEmploye: DBProvider.db.itemSuperviseur[0].matricule);
-    }
+    // if (DBProvider.db.itemEmploye != null) {
+    //   providerPermission.getPermission(
+    //       idEmploye: DBProvider.db.itemSuperviseur[0].matricule);
+    // }
 
     return Scaffold(
       body: SizedBox.expand(

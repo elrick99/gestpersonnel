@@ -37,10 +37,10 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final providerPermission = Provider.of<Permissionss>(context);
     DBProvider.db.getAllEmploye();
-    if (DBProvider.db.itemEmploye != null) {
-      providerPermission.getPermission(
-          idEmploye: DBProvider.db.itemSuperviseur[0].matricule);
-    }
+    // if (DBProvider.db.itemEmploye != null) {
+    //   providerPermission.getPermission(
+    //       idEmploye: DBProvider.db.itemSuperviseur[0].matricule);
+    // }
 
     return Scaffold(
       body: SizedBox.expand(
