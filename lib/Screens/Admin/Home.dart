@@ -13,10 +13,10 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
-    DBProvider.db.getAllEmploye();
-    DBProvider.db.getAllPermission();
+    DBProvider.db.getAllSuperviseur();
+    // DBProvider.db.getAllPermission();
     return FutureBuilder(
-        future: DBProvider.db.getAllEmploye(),
+        future: DBProvider.db.getAllSuperviseur(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
             return Scaffold(
@@ -69,11 +69,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                     var pseudo =
                                         prefs.setString('my_Matricule', null);
 
-                                    DBProvider.db.deleteAllEmploye();
+                                    DBProvider.db.deleteAllSuperviseur();
                                     DBProvider.db.deleteAllPermissions();
                                     Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
-                                      'connexion',
+                                      'accueil',
                                       (Route<dynamic> route) => false,
                                     );
                                   },
@@ -93,7 +93,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   height: 15,
                                 ),
                                 Text(
-                                    "${snapshot.data[0].nom} ${snapshot.data[0].prenoms}",
+                                    "${snapshot.data[0].nomSup} ${snapshot.data[0].prenomSup}",
                                     style: TextStyle(
                                         color: Colors.teal[900],
                                         fontSize: 17,

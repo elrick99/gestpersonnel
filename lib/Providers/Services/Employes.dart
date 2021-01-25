@@ -46,7 +46,10 @@ class Employes with ChangeNotifier {
       if (response.statusCode == 200) {
         _items = [];
         print('////////// Insérer dans le provider /////////');
+        print(response.data);
         if (response.data == "404") {
+          return false;
+        } else if (response.data == "500") {
           return false;
         } else {
           (response.data as List).map((employee) {

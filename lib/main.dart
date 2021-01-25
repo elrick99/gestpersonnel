@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Vonabri',
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -51,11 +51,12 @@ class MyApp extends StatelessWidget {
           // closer together (more dense) than on mobile platforms.
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: ConnexionSuperviseur(),
+        home: MyHomePage(),
         routes: {
           'bottomBar': (context) => BottomBar(),
           'bottomBarAdmin': (context) => BottomBarAdmin(),
           'connexion': (context) => Connexion(),
+          'accueil': (context) => Accueil()
         },
         // home: Connexion(),
       ),

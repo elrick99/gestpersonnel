@@ -107,7 +107,7 @@ class _ConnexionSuperviseurState extends State<ConnexionSuperviseur> {
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
                                   child: TextFormField(
-                                    keyboardType: TextInputType.phone,
+                                    keyboardType: TextInputType.text,
                                     validator: (value) {
                                       return value.isEmpty
                                           ? 'Matricule required'
