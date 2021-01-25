@@ -1,14 +1,16 @@
 import 'dart:io';
 import 'package:gestpersonnel/Providers/Models/Employe.dart';
+import 'package:gestpersonnel/Providers/Models/EmployerDB.dart';
 import 'package:gestpersonnel/Providers/Models/Permission.dart';
 import 'package:gestpersonnel/Providers/Models/Superviseur.dart';
+import 'package:gestpersonnel/Providers/Models/SuperviseurBD.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
   List<Employe> _itemEmploye;
-  List<Superviseur> _itemSuperviseur = [];
+  List<SuperviseurDB> _itemSuperviseur = [];
   List<Permission> _itemPermission = [];
 
   Employe _itemParent;
@@ -34,7 +36,7 @@ class DBProvider {
     return await openDatabase(path, version: 1, onOpen: (db) {},
         onCreate: (Database db, int version) async {
       await db.execute('CREATE TABLE Employe('
-          'id INTEGER PRIMARY KEY,'
+          'id INT,'
           'matricule TEXT,'
           'nom TEXT,'
           'prenoms TEXT,'
@@ -47,23 +49,33 @@ class DBProvider {
           'nationalite TEXT,'
           'ethnie TEXT,'
           'statut_matrimonial TEXT,'
-          'nombre_epouse TEXT,'
-          'nombre_enfant_charge TEXT,'
+          'nombre_epouse INT,'
+          'nombre_enfant_charge INT,'
           'croyance TEXT,'
           'dateEmbauche TEXT,'
           'dateFinContrat TEXT,'
           'password TEXT,'
-          'idTypeContrat TEXT,'
-          'idStatut TEXT,'
-          'idService TEXT,'
-          'idFonction TEXT,'
-          'idSpecialite TEXT,'
-          'idSite TEXT,'
+          'idTypeContrat INT,'
+          'idStatut INT,'
+          'idService INT,'
+          'idFonction INT,'
+          'idSpecialite INT,'
+          'nomSup TEXT,'
+          'prenomSup TEXT,'
+          'contactSup TEXT,'
+          'libSite TEXT,'
+          'libTypeContrat TEXT,'
+          'libStatut TEXT,'
+          'libService TEXT,'
+          'libFonction TEXT,'
+          'libSpecialite TEXT,'
+          'idSite INT,'
+          'idSuperviseur INT,'
           'created_at TEXT,'
           'updated_at TEXT'
           ')');
       await db.execute('CREATE TABLE Surperviseur('
-          'id INTEGER PRIMARY KEY,'
+          'id TEXT,'
           'matricule TEXT,'
           'nomSup TEXT,'
           'prenomSup TEXT,'
@@ -119,8 +131,8 @@ class DBProvider {
     Employe list =
         ress.isNotEmpty ? ress.map((c) => Employe.fromJson(c)).first : null;
 
-    // print("//////////LIST////////");
-    // print(list);
+    print("//////////LIST////////");
+    print(list);
     return res;
   }
 
@@ -229,21 +241,21 @@ class DBProvider {
     List<Employe> list =
         res.isNotEmpty ? res.map((c) => Employe.fromJson(c)).toList() : null;
     _itemEmploye = list;
-    // print('////////// LISTE MESSAGES RECU /////////');
-    // print(list);
+    print('////////// LISTE EMPLOYE /////////');
+    print(list);
     return list;
   }
 
-  Future<List<Superviseur>> getAllSuperviseur() async {
+  Future<List<SuperviseurDB>> getAllSuperviseur() async {
     final db = await database;
     final res = await db.rawQuery("SELECT * FROM Surperviseur");
 
-    List<Superviseur> list = res.isNotEmpty
-        ? res.map((c) => Superviseur.fromJson(c)).toList()
+    List<SuperviseurDB> list = res.isNotEmpty
+        ? res.map((c) => SuperviseurDB.fromJson(c)).toList()
         : null;
     _itemSuperviseur = list;
-    // print('////////// LISTE MESSAGES RECU /////////');
-    // print(list);
+    print('////////// LISTE SUPERVISEUR /////////');
+    print(list);
     return list;
   }
 
@@ -254,14 +266,14 @@ class DBProvider {
     List<Permission> list =
         res.isNotEmpty ? res.map((c) => Permission.fromJson(c)).toList() : null;
     _itemPermission = list;
-    // print('////////// LISTE Permissions RECU /////////');
-    // print(list);
+    print('////////// LISTE PERMISSIONS /////////');
+    print(list);
     return list;
   }
 
   List<Employe> get itemEmploye => _itemEmploye;
 
   List<Permission> get itemPermission => _itemPermission;
-  List<Superviseur> get itemSuperviseur => _itemSuperviseur;
+  List<SuperviseurDB> get itemSuperviseur => _itemSuperviseur;
   // Moyenne get oneMoyenne => itemMoyenne;
 }

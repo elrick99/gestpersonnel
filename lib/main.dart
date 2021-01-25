@@ -84,9 +84,11 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   String my_Matricule;
+  String my_MatriculeE;
   getPrefIdUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
+      my_MatriculeE = sharedPreferences.getString('my_MatriculeE');
       my_Matricule = sharedPreferences.getString('my_Matricule');
     });
   }
@@ -104,11 +106,15 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   route() {
-    Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                (my_Matricule == null) ? Accueil() : BottomBar()));
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) {
+      if (my_MatriculeE != null) {
+        return BottomBar();
+      } else if (my_Matricule != null) {
+        return BottomBarAdmin();
+      } else {
+        return Accueil();
+      }
+    }));
   }
 
   @override

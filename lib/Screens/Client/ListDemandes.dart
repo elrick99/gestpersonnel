@@ -26,10 +26,10 @@ class _ListDemandesState extends State<ListDemandes> {
         final providerPermission =
             Provider.of<Permissionss>(context, listen: false);
         DBProvider.db.getAllEmploye();
-        if (DBProvider.db.itemEmploye != null) {
-          providerPermission.getPermission(
-              idEmploye: DBProvider.db.itemEmploye[0].matricule);
-        }
+        // if (DBProvider.db.itemEmploye != null) {
+        //   providerPermission.getPermission(
+        //       idEmploye: DBProvider.db.itemEmploye[0].matricule);
+        // }
       });
     }
   }

@@ -61,19 +61,19 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.more_vert,
+                                  icon: Icon(Icons.settings_power,
                                       color: Colors.green[400]),
                                   onPressed: () async {
                                     final prefs =
                                         await SharedPreferences.getInstance();
                                     var pseudo =
-                                        prefs.setString('my_Matricule', null);
+                                        prefs.setString('my_MatriculeE', null);
 
                                     DBProvider.db.deleteAllEmploye();
                                     DBProvider.db.deleteAllPermissions();
                                     Navigator.of(context)
                                         .pushNamedAndRemoveUntil(
-                                      'connexion',
+                                      'accueil',
                                       (Route<dynamic> route) => false,
                                     );
                                   },
@@ -117,9 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                          DBProvider.db.itemPermission?.length
-                                                  .toString() ??
-                                              0.toString(),
+                                          DBProvider.db.itemPermission
+                                                      ?.length ==
+                                                  null
+                                              ? 0.toString()
+                                              : DBProvider
+                                                  .db.itemPermission?.length
+                                                  .toString(),
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 20,
@@ -241,9 +245,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               fontWeight: FontWeight.bold)),
                                       subtitle: Text("Liste de Vos Demandes"),
                                       trailing: Text(
-                                          DBProvider.db.itemPermission?.length
-                                                  .toString() ??
-                                              0.toString(),
+                                          DBProvider.db.itemPermission
+                                                      ?.length ==
+                                                  null
+                                              ? 0.toString()
+                                              : DBProvider
+                                                  .db.itemPermission?.length
+                                                  .toString(),
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 15,

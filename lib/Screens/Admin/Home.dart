@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandes.dart';
-import 'package:gestpersonnel/Screens/Client/ListDemandesAccept.dart';
+import 'package:gestpersonnel/Screens/Admin/Presence.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandesRefu.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -61,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 IconButton(
-                                  icon: Icon(Icons.more_vert,
+                                  icon: Icon(Icons.settings_power,
                                       color: Colors.green[400]),
                                   onPressed: () async {
                                     final prefs =
@@ -117,9 +117,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                          DBProvider.db.itemPermission?.length
-                                                  .toString() ??
-                                              0.toString(),
+                                          DBProvider.db.itemPermission
+                                                      ?.length ==
+                                                  null
+                                              ? 0.toString()
+                                              : DBProvider
+                                                  .db.itemPermission?.length
+                                                  .toString(),
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 20,
@@ -131,6 +135,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ],
                                   ),
                                 ),
+                                // Container(
+                                //   color: Colors.green[200],
+                                //   height: 60,
+                                //   width: 1,
+                                // ),
+                                // Container(
+                                //   child: Column(
+                                //     mainAxisAlignment: MainAxisAlignment.center,
+                                //     children: [
+                                //       Text('0',
+                                //           style: TextStyle(
+                                //               color: Colors.teal[900],
+                                //               fontSize: 20,
+                                //               fontWeight: FontWeight.bold)),
+                                //       Text(
+                                //         'Demandes Acceptées',
+                                //         style: TextStyle(fontSize: 10),
+                                //       )
+                                //     ],
+                                //   ),
+                                // ),
                                 Container(
                                   color: Colors.green[200],
                                   height: 60,
@@ -146,28 +171,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               fontSize: 20,
                                               fontWeight: FontWeight.bold)),
                                       Text(
-                                        'Demandes Acceptées',
-                                        style: TextStyle(fontSize: 10),
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  color: Colors.green[200],
-                                  height: 60,
-                                  width: 1,
-                                ),
-                                Container(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text('0',
-                                          style: TextStyle(
-                                              color: Colors.teal[900],
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold)),
-                                      Text(
-                                        'Demandes Réfusées',
+                                        'Présence',
                                         style: TextStyle(fontSize: 10),
                                       )
                                     ],
@@ -234,16 +238,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      title: Text('Vos Demandes',
+                                      title: Text('Les Demandes',
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold)),
-                                      subtitle: Text("Liste de Vos Demandes"),
+                                      subtitle: Text("Demandes"),
                                       trailing: Text(
-                                          DBProvider.db.itemPermission?.length
-                                                  .toString() ??
-                                              0.toString(),
+                                          DBProvider.db.itemPermission
+                                                      ?.length ==
+                                                  null
+                                              ? 0.toString()
+                                              : DBProvider
+                                                  .db.itemPermission?.length
+                                                  .toString(),
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 15,
@@ -264,8 +272,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   onTap: () => Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) =>
-                                              ListDemandesAccept())),
+                                          builder: (context) => Presence())),
                                   child: Center(
                                     child: ListTile(
                                       leading: Container(
@@ -280,12 +287,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                           color: Colors.white,
                                         ),
                                       ),
-                                      title: Text('Demande Acceptée',
+                                      title: Text('Les Présences',
                                           style: TextStyle(
                                               color: Colors.teal[900],
                                               fontSize: 17,
                                               fontWeight: FontWeight.bold)),
-                                      subtitle: Text("Vox demandes acceptées"),
+                                      subtitle: Text("Présences"),
                                       trailing: Text('0',
                                           style: TextStyle(
                                               color: Colors.teal[900],
@@ -294,47 +301,47 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                 )),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Container(
-                                height: MediaQuery.of(context).size.height / 9,
-                                width: MediaQuery.of(context).size.width,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(20)),
-                                child: InkWell(
-                                  onTap: () => Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              ListDemandesrefus())),
-                                  child: Center(
-                                    child: ListTile(
-                                      leading: Container(
-                                        height: 50,
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            color: Colors.green[400],
-                                            borderRadius:
-                                                BorderRadius.circular(10)),
-                                        child: Icon(Icons.close,
-                                            color: Colors.white),
-                                      ),
-                                      title: Text('Demande Refusées',
-                                          style: TextStyle(
-                                              color: Colors.teal[900],
-                                              fontSize: 17,
-                                              fontWeight: FontWeight.bold)),
-                                      subtitle: Text("Vox demandes Refusées"),
-                                      trailing: Text('0',
-                                          style: TextStyle(
-                                              color: Colors.teal[900],
-                                              fontSize: 15,
-                                              fontWeight: FontWeight.bold)),
-                                    ),
-                                  ),
-                                ))
+                            // SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Container(
+                            //     height: MediaQuery.of(context).size.height / 9,
+                            //     width: MediaQuery.of(context).size.width,
+                            //     decoration: BoxDecoration(
+                            //         color: Colors.white,
+                            //         borderRadius: BorderRadius.circular(20)),
+                            //     child: InkWell(
+                            //       onTap: () => Navigator.push(
+                            //           context,
+                            //           MaterialPageRoute(
+                            //               builder: (context) =>
+                            //                   ListDemandesrefus())),
+                            //       child: Center(
+                            //         child: ListTile(
+                            //           leading: Container(
+                            //             height: 50,
+                            //             width: 50,
+                            //             decoration: BoxDecoration(
+                            //                 color: Colors.green[400],
+                            //                 borderRadius:
+                            //                     BorderRadius.circular(10)),
+                            //             child: Icon(Icons.close,
+                            //                 color: Colors.white),
+                            //           ),
+                            //           title: Text('Demande Refusées',
+                            //               style: TextStyle(
+                            //                   color: Colors.teal[900],
+                            //                   fontSize: 17,
+                            //                   fontWeight: FontWeight.bold)),
+                            //           subtitle: Text("Vox demandes Refusées"),
+                            //           trailing: Text('0',
+                            //               style: TextStyle(
+                            //                   color: Colors.teal[900],
+                            //                   fontSize: 15,
+                            //                   fontWeight: FontWeight.bold)),
+                            //         ),
+                            //       ),
+                            //     ))
                           ],
                         ),
                       ),

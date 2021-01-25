@@ -1,22 +1,22 @@
 // To parse this JSON data, do
 //
-//     final superviseur = superviseurFromJson(jsonString);
+//     final employe = employeFromJson(jsonString);
 
 import 'dart:convert';
 
-List<Superviseur> superviseurFromJson(String str) => List<Superviseur>.from(
-    json.decode(str).map((x) => Superviseur.fromJson(x)));
+List<EmployeDB> employeFromJson(String str) =>
+    List<EmployeDB>.from(json.decode(str).map((x) => EmployeDB.fromJson(x)));
 
-String superviseurToJson(List<Superviseur> data) =>
+String employeToJson(List<EmployeDB> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Superviseur {
-  Superviseur({
+class EmployeDB {
+  EmployeDB({
     this.id,
     this.matricule,
-    this.nomSup,
-    this.prenomSup,
-    this.contactSup,
+    this.nom,
+    this.prenoms,
+    this.contact,
     this.email,
     this.dateNaissance,
     this.lieuNaissance,
@@ -32,12 +32,18 @@ class Superviseur {
     this.dateFinContrat,
     this.password,
     this.idTypeContrat,
+    this.idStatut,
     this.idFonction,
     this.idSpecialite,
     this.idService,
+    this.idSuperviseur,
     this.idSite,
     this.createdAt,
     this.updatedAt,
+    this.nomSup,
+    this.prenomSup,
+    this.contactSup,
+    this.libStatut,
     this.libSite,
     this.libTypeContrat,
     this.libService,
@@ -45,11 +51,11 @@ class Superviseur {
     this.libSpecialite,
   });
 
-  int id;
+  String id;
   String matricule;
-  String nomSup;
-  String prenomSup;
-  String contactSup;
+  String nom;
+  String prenoms;
+  String contact;
   String email;
   DateTime dateNaissance;
   String lieuNaissance;
@@ -58,31 +64,37 @@ class Superviseur {
   String nationalite;
   String ethnie;
   String statutMatrimonial;
-  int nombreEpouse;
-  int nombreEnfantCharge;
+  String nombreEpouse;
+  String nombreEnfantCharge;
   String croyance;
   DateTime dateEmbauche;
   DateTime dateFinContrat;
   String password;
-  int idTypeContrat;
-  int idFonction;
-  int idSpecialite;
-  int idService;
-  int idSite;
+  String idTypeContrat;
+  String idStatut;
+  String idFonction;
+  String idSpecialite;
+  String idService;
+  String idSuperviseur;
+  String idSite;
   DateTime createdAt;
   DateTime updatedAt;
+  String nomSup;
+  String prenomSup;
+  String contactSup;
+  String libStatut;
   String libSite;
   String libTypeContrat;
   String libService;
   String libFonction;
   String libSpecialite;
 
-  factory Superviseur.fromJson(Map<String, dynamic> json) => Superviseur(
+  factory EmployeDB.fromJson(Map<String, dynamic> json) => EmployeDB(
         id: json["id"],
         matricule: json["matricule"],
-        nomSup: json["nomSup"],
-        prenomSup: json["prenomSup"],
-        contactSup: json["contactSup"],
+        nom: json["nom"],
+        prenoms: json["prenoms"],
+        contact: json["contact"],
         email: json["email"],
         dateNaissance: DateTime.parse(json["dateNaissance"]),
         lieuNaissance: json["lieuNaissance"],
@@ -98,12 +110,18 @@ class Superviseur {
         dateFinContrat: DateTime.parse(json["dateFinContrat"]),
         password: json["password"],
         idTypeContrat: json["idTypeContrat"],
+        idStatut: json["idStatut"],
         idFonction: json["idFonction"],
         idSpecialite: json["idSpecialite"],
         idService: json["idService"],
+        idSuperviseur: json["idSuperviseur"],
         idSite: json["idSite"],
         createdAt: DateTime.parse(json["created_at"]),
         updatedAt: DateTime.parse(json["updated_at"]),
+        nomSup: json["nomSup"],
+        prenomSup: json["prenomSup"],
+        contactSup: json["contactSup"],
+        libStatut: json["libStatut"],
         libSite: json["libSite"],
         libTypeContrat: json["libTypeContrat"],
         libService: json["libService"],
@@ -114,9 +132,9 @@ class Superviseur {
   Map<String, dynamic> toJson() => {
         "id": id,
         "matricule": matricule,
-        "nomSup": nomSup,
-        "prenomSup": prenomSup,
-        "contactSup": contactSup,
+        "nom": nom,
+        "prenoms": prenoms,
+        "contact": contact,
         "email": email,
         "dateNaissance":
             "${dateNaissance.year.toString().padLeft(4, '0')}-${dateNaissance.month.toString().padLeft(2, '0')}-${dateNaissance.day.toString().padLeft(2, '0')}",
@@ -135,12 +153,18 @@ class Superviseur {
             "${dateFinContrat.year.toString().padLeft(4, '0')}-${dateFinContrat.month.toString().padLeft(2, '0')}-${dateFinContrat.day.toString().padLeft(2, '0')}",
         "password": password,
         "idTypeContrat": idTypeContrat,
+        "idStatut": idStatut,
         "idFonction": idFonction,
         "idSpecialite": idSpecialite,
         "idService": idService,
+        "idSuperviseur": idSuperviseur,
         "idSite": idSite,
         "created_at": createdAt.toIso8601String(),
         "updated_at": updatedAt.toIso8601String(),
+        "nomSup": nomSup,
+        "prenomSup": prenomSup,
+        "contactSup": contactSup,
+        "libStatut": libStatut,
         "libSite": libSite,
         "libTypeContrat": libTypeContrat,
         "libService": libService,

@@ -1,11 +1,9 @@
+import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Screens/Client/AddDemande.dart';
 import 'package:gestpersonnel/Screens/Client/Home.dart';
 import 'package:gestpersonnel/Screens/Client/ListDemandes.dart';
-import 'package:motion_tab_bar/MotionTabBarView.dart';
-import 'package:motion_tab_bar/MotionTabController.dart';
-import 'package:motion_tab_bar/motiontabbar.dart';
 import 'package:provider/provider.dart';
 import 'package:gestpersonnel/Providers/Services/Permissionss.dart';
 
@@ -19,47 +17,77 @@ class BottomBar extends StatefulWidget {
 }
 
 class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
-  MotionTabController _tabController;
+  int _currentIndex = 0;
+  int _counter = 0;
+  PageController _pageController;
 
   @override
   void initState() {
     super.initState();
-    _tabController = MotionTabController(initialIndex: 1, vsync: this);
+    _pageController = PageController();
   }
 
   @override
   void dispose() {
+    _pageController.dispose();
     super.dispose();
-    _tabController.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final providerPermission = Provider.of<Permissionss>(context);
-    DBProvider.db.getAllSuperviseur();
+    DBProvider.db.getAllEmploye();
     if (DBProvider.db.itemEmploye != null) {
       providerPermission.getPermission(
           idEmploye: DBProvider.db.itemSuperviseur[0].matricule);
     }
 
     return Scaffold(
-        bottomNavigationBar: MotionTabBar(
-          labels: ["Liste", "Profil", "Demande"],
-          initialSelectedTab: "Profil",
-          tabIconColor: Colors.green[400],
-          tabSelectedColor: Colors.green[400],
-          onTabItemSelected: (int value) {
-            // print(value);
-            setState(() {
-              _tabController.index = value;
-            });
+      body: SizedBox.expand(
+        child: PageView(
+          controller: _pageController,
+          onPageChanged: (index) {
+            setState(() => _currentIndex = index);
           },
-          icons: [Icons.assignment_turned_in, Icons.person_outline, Icons.add],
-          textStyle: TextStyle(color: Colors.green[400]),
+          children: <Widget>[
+            HomeScreen(),
+            AddDemande(),
+            ListDemandes(),
+          ],
         ),
-        body: MotionTabBarView(
-          controller: _tabController,
-          children: <Widget>[ListDemandes(), HomeScreen(), AddDemande()],
-        ));
+      ),
+      bottomNavigationBar: BottomNavyBar(
+        selectedIndex: _currentIndex,
+        showElevation: true,
+        itemCornerRadius: 24,
+        curve: Curves.easeIn,
+        onItemSelected: (index) {
+          setState(() => _currentIndex = index);
+          _pageController.jumpToPage(index);
+        },
+        items: <BottomNavyBarItem>[
+          BottomNavyBarItem(
+            icon: Icon(Icons.apps),
+            title: Text('Home'),
+            activeColor: Colors.green[400],
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.plumbing),
+            title: Text('Envoyé une Permission'),
+            activeColor: Colors.green[400],
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
+            icon: Icon(Icons.list),
+            title: Text(
+              'Liste Permission',
+            ),
+            activeColor: Colors.green[400],
+            textAlign: TextAlign.center,
+          ),
+        ],
+      ),
+    );
   }
 }

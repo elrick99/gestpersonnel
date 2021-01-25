@@ -194,7 +194,7 @@ class _ConnexionState extends State<Connexion> {
                                                   await SharedPreferences
                                                       .getInstance();
                                               var pseudo = prefs.setString(
-                                                  'my_Matricule',
+                                                  'my_MatriculeE',
                                                   '$_myMatricule');
                                               Navigator.of(context)
                                                   .pushNamedAndRemoveUntil(

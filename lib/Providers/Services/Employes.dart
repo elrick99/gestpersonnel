@@ -23,10 +23,11 @@ class Employes with ChangeNotifier {
         // if (response.data['status'] == 0) {
         //   return false;
         // }
+        // print(response.data);
         (response.data as List).map((employee) {
           // print(response.data);
           _items.add(Employe.fromJson(employee));
-          // print(_items.length);
+          print(_items.length);
           data = employee;
         }).toList();
 
@@ -52,13 +53,8 @@ class Employes with ChangeNotifier {
         } else if (response.data == "500") {
           return false;
         } else {
-          (response.data as List).map((employee) {
-            // print(response.data);
-            _items.add(Employe.fromJson(employee));
-            DBProvider.db.createParent(employee);
-            // print(_items.length);
-            data = employee;
-          }).toList();
+          // print((Employe.fromJson(response.data)));
+          DBProvider.db.createParent(Employe.fromJson(response.data));
           return true;
         }
       }

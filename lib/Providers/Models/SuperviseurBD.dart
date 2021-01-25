@@ -4,14 +4,14 @@
 
 import 'dart:convert';
 
-List<Superviseur> superviseurFromJson(String str) => List<Superviseur>.from(
-    json.decode(str).map((x) => Superviseur.fromJson(x)));
+List<SuperviseurDB> superviseurFromJson(String str) => List<SuperviseurDB>.from(
+    json.decode(str).map((x) => SuperviseurDB.fromJson(x)));
 
-String superviseurToJson(List<Superviseur> data) =>
+String superviseurToJson(List<SuperviseurDB> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class Superviseur {
-  Superviseur({
+class SuperviseurDB {
+  SuperviseurDB({
     this.id,
     this.matricule,
     this.nomSup,
@@ -45,7 +45,7 @@ class Superviseur {
     this.libSpecialite,
   });
 
-  int id;
+  String id;
   String matricule;
   String nomSup;
   String prenomSup;
@@ -58,17 +58,17 @@ class Superviseur {
   String nationalite;
   String ethnie;
   String statutMatrimonial;
-  int nombreEpouse;
-  int nombreEnfantCharge;
+  String nombreEpouse;
+  String nombreEnfantCharge;
   String croyance;
   DateTime dateEmbauche;
   DateTime dateFinContrat;
   String password;
-  int idTypeContrat;
-  int idFonction;
-  int idSpecialite;
-  int idService;
-  int idSite;
+  String idTypeContrat;
+  String idFonction;
+  String idSpecialite;
+  String idService;
+  String idSite;
   DateTime createdAt;
   DateTime updatedAt;
   String libSite;
@@ -77,7 +77,7 @@ class Superviseur {
   String libFonction;
   String libSpecialite;
 
-  factory Superviseur.fromJson(Map<String, dynamic> json) => Superviseur(
+  factory SuperviseurDB.fromJson(Map<String, dynamic> json) => SuperviseurDB(
         id: json["id"],
         matricule: json["matricule"],
         nomSup: json["nomSup"],
