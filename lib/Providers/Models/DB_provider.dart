@@ -1,13 +1,14 @@
 import 'dart:io';
 import 'package:gestpersonnel/Providers/Models/Employe.dart';
 import 'package:gestpersonnel/Providers/Models/Permission.dart';
+import 'package:gestpersonnel/Providers/Models/Superviseur.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
   List<Employe> _itemEmploye;
-  // List<Employe> _itemEmploye = [];
+  List<Superviseur> _itemSuperviseur = [];
   List<Permission> _itemPermission = [];
 
   Employe _itemParent;
@@ -61,6 +62,40 @@ class DBProvider {
           'created_at TEXT,'
           'updated_at TEXT'
           ')');
+      await db.execute('CREATE TABLE Surperviseur('
+          'id INTEGER PRIMARY KEY,'
+          'matricule TEXT,'
+          'nomSup TEXT,'
+          'prenomSup TEXT,'
+          'contactSup TEXT,'
+          'email TEXT,'
+          'dateNaissance TEXT,'
+          'lieuNaissance TEXT,'
+          'domicile TEXT,'
+          'sexe TEXT,'
+          'nationalite TEXT,'
+          'ethnie TEXT,'
+          'statut_matrimonial TEXT,'
+          'nombre_epouse TEXT,'
+          'nombre_enfant_charge TEXT,'
+          'croyance TEXT,'
+          'dateEmbauche TEXT,'
+          'dateFinContrat TEXT,'
+          'password TEXT,'
+          'idTypeContrat TEXT,'
+          'idStatut TEXT,'
+          'idService TEXT,'
+          'idFonction TEXT,'
+          'idSpecialite TEXT,'
+          'idSite TEXT,'
+          'libSite TEXT,'
+          'libTypeContrat TEXT,'
+          'libService TEXT,'
+          'libFonction TEXT,'
+          'libSpecialite TEXT,'
+          'created_at TEXT,'
+          'updated_at TEXT'
+          ')');
       await db.execute('CREATE TABLE Permissions('
           'id INTEGER PRIMARY KEY,'
           'datePermission TEXT,'
@@ -83,6 +118,22 @@ class DBProvider {
 
     Employe list =
         ress.isNotEmpty ? ress.map((c) => Employe.fromJson(c)).first : null;
+
+    // print("//////////LIST////////");
+    // print(list);
+    return res;
+  }
+
+  // Insert Parent on database
+  Future<int> createSuperviseur(Superviseur newParent) async {
+    await deleteAllSuperviseur();
+    // print(newParent.);
+    final db = await database;
+    final res = await db.insert('Surperviseur', newParent.toJson());
+    // final ress = await db.rawQuery("SELECT * FROM Surperviseur");
+
+    // Employe list =
+    //     ress.isNotEmpty ? ress.map((c) => Employe.fromJson(c)).first : null;
 
     // print("//////////LIST////////");
     // print(list);
@@ -121,6 +172,13 @@ class DBProvider {
   Future<int> deleteAllEmploye() async {
     final db = await database;
     final res = await db.rawDelete('DELETE FROM Employe');
+
+    return res;
+  }
+
+  Future<int> deleteAllSuperviseur() async {
+    final db = await database;
+    final res = await db.rawDelete('DELETE FROM Surperviseur');
 
     return res;
   }
@@ -176,6 +234,19 @@ class DBProvider {
     return list;
   }
 
+  Future<List<Superviseur>> getAllSuperviseur() async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM Surperviseur");
+
+    List<Superviseur> list = res.isNotEmpty
+        ? res.map((c) => Superviseur.fromJson(c)).toList()
+        : null;
+    _itemSuperviseur = list;
+    // print('////////// LISTE MESSAGES RECU /////////');
+    // print(list);
+    return list;
+  }
+
   Future<List<Permission>> getAllPermission() async {
     final db = await database;
     final res = await db.rawQuery("SELECT * FROM Permissions");
@@ -191,5 +262,6 @@ class DBProvider {
   List<Employe> get itemEmploye => _itemEmploye;
 
   List<Permission> get itemPermission => _itemPermission;
+  List<Superviseur> get itemSuperviseur => _itemSuperviseur;
   // Moyenne get oneMoyenne => itemMoyenne;
 }

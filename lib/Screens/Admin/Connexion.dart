@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Providers/Services/Employes.dart';
+import 'package:gestpersonnel/Providers/Services/Superviseurs.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 
-class Connexion extends StatefulWidget {
+class ConnexionSuperviseur extends StatefulWidget {
   @override
-  _ConnexionState createState() => _ConnexionState();
+  _ConnexionSuperviseurState createState() => _ConnexionSuperviseurState();
 }
 
-class _ConnexionState extends State<Connexion> {
+class _ConnexionSuperviseurState extends State<ConnexionSuperviseur> {
   getPrefIdUser() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     setState(() {
@@ -38,8 +39,8 @@ class _ConnexionState extends State<Connexion> {
   void didChangeDependencies() {
     // TODO: implement didChangeDependencies
     super.didChangeDependencies();
-    final providerEmploye = Provider.of<Employes>(context);
-    providerEmploye.getEmploye();
+    final providerEmploye = Provider.of<Superviseurs>(context);
+    providerEmploye.getSuperviseur();
   }
 
   @override
@@ -52,8 +53,8 @@ class _ConnexionState extends State<Connexion> {
   String _myPassword;
   @override
   Widget build(BuildContext context) {
-    final providerEmploye = Provider.of<Employes>(context);
-    DBProvider.db.getAllEmploye();
+    final providerEmploye = Provider.of<Superviseurs>(context);
+    DBProvider.db.getAllSuperviseur();
     // providerEmploye.geParents();
 
     return (loaded == true)
@@ -182,7 +183,7 @@ class _ConnexionState extends State<Connexion> {
                                       onPressed: () async {
                                         if (validateSaved()) {
                                           providerEmploye
-                                              .postEmploye(
+                                              .postSuperviseur(
                                                   matricule: _myMatricule)
                                               .then((value) async {
                                             if (value == false) {
@@ -198,12 +199,11 @@ class _ConnexionState extends State<Connexion> {
                                                   '$_myMatricule');
                                               Navigator.of(context)
                                                   .pushNamedAndRemoveUntil(
-                                                'bottomBar',
+                                                'bottomBarAdmin',
                                                 (Route<dynamic> route) => false,
                                               );
                                             }
                                           });
-
                                           // var response =
                                           //     providerEmploye.wheremail(
                                           //         _myMatricule, _myPassword);
@@ -215,7 +215,7 @@ class _ConnexionState extends State<Connexion> {
                                           //   });
 
                                           //   DBProvider.db
-                                          //       .createParent(response);
+                                          //       .createSuperviseur(response);
                                           //   final prefs =
                                           //       await SharedPreferences
                                           //           .getInstance();
@@ -233,43 +233,6 @@ class _ConnexionState extends State<Connexion> {
                                           //   });
                                           // }
 
-                                          // final verified = providerEmploye.wheremail(
-                                          //     _myMatricule, _myPassword);
-                                          // // print(verified);
-                                          // if (verified == true) {
-                                          //   setState(() {
-                                          //     info = false;
-                                          //   });
-                                          // } else {
-
-                                          //   // var insert =
-                                          //   //     DBProvider.db.createParent(parent);
-                                          //   // insert.then((value) async {
-                                          //   //   if (value == 1) {
-                                          //   //     setState(() {
-                                          //   //       loaded = true;
-                                          //   //       result = true;
-                                          //   //     });
-                                          //   //     providerToken.posTokens(
-                                          //   //         _myTelephone, _token);
-                                          //   //     var eleves = providerEleve.getEleves(
-                                          //   //         codeparent: code);
-                                          //   //     var matieres =
-                                          //   //         providerMatiere.getMatieres();
-                                          //   //     await Future.delayed(
-                                          //   //         const Duration(seconds: 3));
-                                          //   //     var codes = prefs.setString(
-                                          //   //         'my_CodeUser',
-                                          //   //         '${parent.codeUtilisateur}');
-                                          //   //     _myTelephone = null;
-                                          //   //     Navigator.of(context)
-                                          //   //         .pushNamedAndRemoveUntil(
-                                          //   //             'listEleve',
-                                          //   //             (Route<dynamic> route) => false,
-                                          //   //             arguments: parent);
-                                          //   //   }
-                                          //   // });
-                                          // }
                                         }
                                       }),
                                 ),

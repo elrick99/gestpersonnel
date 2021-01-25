@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
-import 'package:gestpersonnel/Screens/Client/AddDemande.dart';
-import 'package:gestpersonnel/Screens/Client/Home.dart';
-import 'package:gestpersonnel/Screens/Client/ListDemandes.dart';
+import 'package:gestpersonnel/Screens/Admin/Home.dart';
+import 'package:gestpersonnel/Screens/Admin/ListDemandes.dart';
+import 'package:gestpersonnel/Screens/Admin/Presence.dart';
 import 'package:motion_tab_bar/MotionTabBarView.dart';
 import 'package:motion_tab_bar/MotionTabController.dart';
 import 'package:motion_tab_bar/motiontabbar.dart';
 import 'package:provider/provider.dart';
 import 'package:gestpersonnel/Providers/Services/Permissionss.dart';
 
-class BottomBar extends StatefulWidget {
-  BottomBar({Key key, this.title}) : super(key: key);
+class BottomBarAdmin extends StatefulWidget {
+  BottomBarAdmin({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _BottomBarState createState() => _BottomBarState();
+  _BottomBarAdminState createState() => _BottomBarAdminState();
 }
 
-class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
+class _BottomBarAdminState extends State<BottomBarAdmin>
+    with TickerProviderStateMixin {
   MotionTabController _tabController;
 
   @override
@@ -37,11 +38,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final providerPermission = Provider.of<Permissionss>(context);
     DBProvider.db.getAllSuperviseur();
-    if (DBProvider.db.itemEmploye != null) {
-      providerPermission.getPermission(
-          idEmploye: DBProvider.db.itemSuperviseur[0].matricule);
-    }
-
+    print(DBProvider.db.itemSuperviseur?.length);
     return Scaffold(
         bottomNavigationBar: MotionTabBar(
           labels: ["Liste", "Profil", "Demande"],
@@ -59,7 +56,7 @@ class _BottomBarState extends State<BottomBar> with TickerProviderStateMixin {
         ),
         body: MotionTabBarView(
           controller: _tabController,
-          children: <Widget>[ListDemandes(), HomeScreen(), AddDemande()],
+          children: <Widget>[ListDemandes(), HomeScreen(), Presence()],
         ));
   }
 }

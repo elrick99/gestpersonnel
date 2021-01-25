@@ -2,18 +2,19 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Providers/Models/Employe.dart';
+import 'package:gestpersonnel/Providers/Models/Superviseur.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-class Employes with ChangeNotifier {
-  List<Employe> _items = [];
+class Superviseurs with ChangeNotifier {
+  List<Superviseur> _items = [];
 
   /**
    * GET Produit
    */
 
-  Future<void> getEmploye({String matricule, String password}) async {
-    final String url = "https://api-vonabri.herokuapp.com/api/employes";
+  Future<void> getSuperviseur({String matricule, String password}) async {
+    final String url = "https://api-vonabri.herokuapp.com/api/superviseur";
     try {
       var data;
       Response response = await Dio().get(url);
@@ -25,7 +26,7 @@ class Employes with ChangeNotifier {
         // }
         (response.data as List).map((employee) {
           // print(response.data);
-          _items.add(Employe.fromJson(employee));
+          _items.add(Superviseur.fromJson(employee));
           // print(_items.length);
           data = employee;
         }).toList();
@@ -37,8 +38,8 @@ class Employes with ChangeNotifier {
     }
   }
 
-  Future<bool> postEmploye({String matricule, String password}) async {
-    final String url = "https://api-vonabri.herokuapp.com/api/auth/$matricule";
+  Future<bool> postSuperviseur({String matricule, String password}) async {
+    final String url = "https://api-vonabri.herokuapp.com/api/auths/$matricule";
     try {
       var data;
       Response response =
@@ -49,28 +50,31 @@ class Employes with ChangeNotifier {
         if (response.data == "404") {
           return false;
         } else {
-          (response.data as List).map((employee) {
-            // print(response.data);
-            _items.add(Employe.fromJson(employee));
-            DBProvider.db.createParent(employee);
-            // print(_items.length);
-            data = employee;
-          }).toList();
+          print((Superviseur.fromJson(response.data)));
+          DBProvider.db.createSuperviseur(Superviseur.fromJson(response.data));
+          // (response.data as List).map((employee) {
+          //   print(employee['matricule']);
+          //   _items.add(Superviseur.fromJson(employee));
+          //   //
+          //   // print(_items.length);
+          //   data = employee;
+          // }).toList();
           return true;
         }
+        // notifyListeners();
       }
     } catch (e) {
       print(e);
     }
   }
 
-  Employe findById(String telephone) {
+  Superviseur findById(String telephone) {
     // print(pseudo);
     return _items.firstWhere((prod) => prod.matricule == telephone,
         orElse: () => null);
   }
 
-  Employe wheremail(String telephone, String password) {
+  Superviseur wheremail(String telephone, String password) {
     // print(telephone);
     var data = _items.firstWhere(
         (element) =>
@@ -94,5 +98,5 @@ class Employes with ChangeNotifier {
     // return _item.firstWhere((boutique) => boutique.user.nom == email);
   }
 
-  List<Employe> get items => [..._items];
+  List<Superviseur> get items => [..._items];
 }
