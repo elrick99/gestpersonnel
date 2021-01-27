@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         await SharedPreferences.getInstance();
                                     var pseudo =
                                         prefs.setString('my_Matricule', null);
-
+                                    DBProvider.db.deleteAllEmploye();
                                     DBProvider.db.deleteAllSuperviseur();
                                     DBProvider.db.deleteAllPermissions();
                                     Navigator.of(context)

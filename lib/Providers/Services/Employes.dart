@@ -63,6 +63,34 @@ class Employes with ChangeNotifier {
     }
   }
 
+  Future<bool> postSuperviseurEmploye(
+      {String matricule, String password}) async {
+    final String url =
+        "http://api-vonabri.herokuapp.com/api/employes_sup/$matricule";
+    try {
+      var data;
+      Response response = await Dio().get(url);
+      if (response.statusCode == 200) {
+        _items = [];
+        print('////////// Insérer dans le provider /////////');
+        print(response.data);
+        if (response.data == "404") {
+          return false;
+        } else if (response.data == "500") {
+          return false;
+        } else {
+          (response.data as List).map((employee) {
+            DBProvider.db.createParent(Employe.fromJson(employee));
+          }).toList();
+          // DBProvider.db.createParent(Employe.fromJson(response.data));
+          return true;
+        }
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
   Employe findById(String telephone) {
     // print(pseudo);
     return _items.firstWhere((prod) => prod.matricule == telephone,
