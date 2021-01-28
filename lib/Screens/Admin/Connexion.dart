@@ -19,6 +19,7 @@ class _ConnexionSuperviseurState extends State<ConnexionSuperviseur> {
     });
   }
 
+  bool password = true;
   String checkPseudo;
   bool info = false;
   bool vidibility = true;
@@ -137,9 +138,11 @@ class _ConnexionSuperviseurState extends State<ConnexionSuperviseur> {
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
                                   child: TextFormField(
+                                    obscureText:
+                                        (password == true) ? true : false,
                                     validator: (value) {
                                       return value.isEmpty
-                                          ? 'Matricule required'
+                                          ? 'Password required'
                                           : null;
                                     },
                                     onSaved: (newValue) {
@@ -147,6 +150,23 @@ class _ConnexionSuperviseurState extends State<ConnexionSuperviseur> {
                                     },
                                     autocorrect: true,
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          if (password == true) {
+                                            setState(() {
+                                              password = false;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              password = true;
+                                            });
+                                          }
+                                        },
+                                        icon: Icon((password == true)
+                                            ? Icons.visibility_off
+                                            : Icons.remove_red_eye),
+                                        color: Colors.green[400],
+                                      ),
                                       hintText: 'Mot de Passe',
                                       errorBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,

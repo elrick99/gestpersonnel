@@ -18,6 +18,7 @@ class _ConnexionState extends State<Connexion> {
     });
   }
 
+  bool password = true;
   String checkPseudo;
   bool info = false;
   bool vidibility = true;
@@ -136,6 +137,9 @@ class _ConnexionState extends State<Connexion> {
                                   padding: const EdgeInsets.only(
                                       left: 8.0, right: 8.0),
                                   child: TextFormField(
+                                    obscureText:
+                                        (password == true) ? true : false,
+                                    // keyboardType: TextInputType.visiblePassword,
                                     validator: (value) {
                                       return value.isEmpty
                                           ? 'Matricule required'
@@ -146,6 +150,23 @@ class _ConnexionState extends State<Connexion> {
                                     },
                                     autocorrect: true,
                                     decoration: InputDecoration(
+                                      suffixIcon: IconButton(
+                                        onPressed: () {
+                                          if(password==true){
+                                          setState(() {
+                                            password = false;
+                                          });
+                                          }else{
+                                             setState(() {
+                                            password = true;
+                                          });
+                                          }
+                                        },
+                                        icon: Icon((password == true)
+                                            ? Icons.visibility_off
+                                            : Icons.remove_red_eye),
+                                        color: Colors.green[400],
+                                      ),
                                       hintText: 'Mot de Passe',
                                       errorBorder: InputBorder.none,
                                       focusedBorder: InputBorder.none,

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Services/Employes.dart';
+import 'package:gestpersonnel/Providers/Services/Presences.dart';
 import 'package:gestpersonnel/Providers/Services/Superviseurs.dart';
 import 'package:gestpersonnel/Screens/Accueil.dart';
 import 'package:gestpersonnel/Screens/Admin/Connexion.dart';
@@ -11,6 +12,7 @@ import 'package:gestpersonnel/Screens/Client/BotttomBar.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:gestpersonnel/Providers/Services/Permissionss.dart';
+import 'package:gestpersonnel/Providers/Services/Motifs.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,6 +32,12 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider.value(
           value: Superviseurs(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Motifs(),
+        ),
+        ChangeNotifierProvider.value(
+          value: Presences(),
         ),
       ],
       child: MaterialApp(
