@@ -134,6 +134,7 @@ class _AlertDialogeState extends State<AlertDialoge> {
   bool motif = false;
   bool resultabs = false;
   int dropdownValue = 1;
+  bool resultprs = false;
 
   @override
   void initState() {
@@ -201,123 +202,151 @@ class _AlertDialogeState extends State<AlertDialoge> {
                             style: TextStyle(
                                 color: Colors.red[400],
                                 fontWeight: FontWeight.bold))
-                        : SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                MaterialButton(
+                        : (resultprs == true)
+                            ? Text('Pointé Présent',
+                                style: TextStyle(
                                     color: Colors.green[400],
-                                    child: Container(
-                                      width: 100,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Icon(
-                                            Icons.check,
-                                            color: Colors.white,
-                                          ),
-                                          Text('Présent',
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ],
-                                      ),
-                                    ),
-                                    onPressed: () => null),
-                                MaterialButton(
-                                    color: Colors.red[400],
-                                    child: Container(
-                                      width: 100,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceAround,
-                                        children: [
-                                          Icon(
-                                            Icons.close,
-                                            color: Colors.white,
-                                          ),
-                                          Text('Absent',
-                                              style: TextStyle(
-                                                  color: Colors.white)),
-                                        ],
-                                      ),
-                                    ),
-                                    onPressed: () {
-                                      setState(() {
-                                        motif = true;
-                                      });
-                                    }),
-                                (motif == true)
-                                    ? Row(
-                                        children: [
-                                          Expanded(
-                                            flex: 3,
-                                            child: Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height /
-                                                  12,
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
+                                    fontWeight: FontWeight.bold))
+                            : SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    MaterialButton(
+                                        color: Colors.green[400],
+                                        child: Container(
+                                          width: 100,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(
+                                                Icons.check,
+                                                color: Colors.white,
+                                              ),
+                                              Text('Arrivé',
+                                                  style: TextStyle(
                                                       color: Colors.white)),
-                                              child: DropdownButton<int>(
-                                                underline: null,
-                                                isExpanded: true,
-                                                value: dropdownValue,
-                                                iconSize: 24,
-                                                elevation: 16,
-                                                onChanged: (newValue) {
-                                                  setState(() {
-                                                    print(newValue);
-                                                    dropdownValue = newValue;
-                                                  });
-                                                },
-                                                items: providerProducts.items
-                                                    .map((value) {
-                                                  return DropdownMenuItem(
-                                                    value: value.id,
-                                                    child: Text(
-                                                      value.libelle,
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                            ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 5,
-                                          ),
-                                          Expanded(
-                                            child: MaterialButton(
-                                              color: Colors.blue[400],
-                                              child: Text(
-                                                'OK',
-                                                style: TextStyle(
-                                                    color: Colors.white),
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            resultabs = false;
+                                            print(widget.employe.id);
+                                          });
+                                          providerPresence
+                                              .postArrive(
+                                                  idMotif: widget.employe.id)
+                                              .then((value) {
+                                            if (value == true) {
+                                              print(value);
+                                              setState(() {
+                                                motif = false;
+                                                resultprs = true;
+                                                resultabs = false;
+                                                print(resultprs);
+                                              });
+                                            } else {}
+                                          });
+                                        }),
+                                    MaterialButton(
+                                        color: Colors.red[400],
+                                        child: Container(
+                                          width: 100,
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: [
+                                              Icon(
+                                                Icons.close,
+                                                color: Colors.white,
                                               ),
-                                              onPressed: () {
-                                                providerPresence
-                                                    .postAbsences(
-                                                        codeEmploye:
-                                                            widget.employe.id,
-                                                        idMotif: dropdownValue)
-                                                    .then((value) {
-                                                  if (value == true) {
-                                                    print(value);
-                                                    setState(() {
-                                                      motif = false;
-                                                      resultabs = true;
+                                              Text('Absent',
+                                                  style: TextStyle(
+                                                      color: Colors.white)),
+                                            ],
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          setState(() {
+                                            motif = true;
+                                            resultabs = false;
+                                          });
+                                        }),
+                                    (motif == true)
+                                        ? Row(
+                                            children: [
+                                              Expanded(
+                                                flex: 3,
+                                                child: Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      12,
+                                                  decoration: BoxDecoration(
+                                                      border: Border.all(
+                                                          color: Colors.white)),
+                                                  child: DropdownButton<int>(
+                                                    underline: null,
+                                                    isExpanded: true,
+                                                    value: dropdownValue,
+                                                    iconSize: 24,
+                                                    elevation: 16,
+                                                    onChanged: (newValue) {
+                                                      setState(() {
+                                                        print(newValue);
+                                                        dropdownValue =
+                                                            newValue;
+                                                      });
+                                                    },
+                                                    items: providerProducts
+                                                        .items
+                                                        .map((value) {
+                                                      return DropdownMenuItem(
+                                                        value: value.id,
+                                                        child: Text(
+                                                          value.libelle,
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Expanded(
+                                                child: MaterialButton(
+                                                  color: Colors.blue[400],
+                                                  child: Text(
+                                                    'OK',
+                                                    style: TextStyle(
+                                                        color: Colors.white),
+                                                  ),
+                                                  onPressed: () {
+                                                    providerPresence
+                                                        .postAbsences(
+                                                            codeEmploye: widget
+                                                                .employe.id,
+                                                            idMotif:
+                                                                dropdownValue)
+                                                        .then((value) {
+                                                      if (value == true) {
+                                                        print(value);
+                                                        setState(() {
+                                                          motif = false;
+                                                          resultabs = true;
+                                                        });
+                                                      } else {}
                                                     });
-                                                  } else {}
-                                                });
-                                              },
-                                            ),
+                                                  },
+                                                ),
+                                              )
+                                            ],
                                           )
-                                        ],
-                                      )
-                                    : Text('')
-                              ],
-                            ),
-                          ),
+                                        : Text('')
+                                  ],
+                                ),
+                              ),
                   ),
             actions: [
               (resultabs = true)
@@ -329,7 +358,16 @@ class _AlertDialogeState extends State<AlertDialoge> {
                         });
                         Navigator.pop(context);
                       })
-                  : Text('')
+                  : (resultprs == true)
+                      ? MaterialButton(
+                          child: Text('Retour'),
+                          onPressed: () {
+                            setState(() {
+                              resultprs = false;
+                            });
+                            Navigator.pop(context);
+                          })
+                      : Text('')
             ],
           );
   }
