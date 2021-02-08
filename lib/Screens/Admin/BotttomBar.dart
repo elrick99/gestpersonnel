@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:gestpersonnel/Providers/Models/DB_provider.dart';
 import 'package:gestpersonnel/Screens/Admin/Home.dart';
 import 'package:gestpersonnel/Screens/Admin/ListDemandes.dart';
-import 'package:gestpersonnel/Screens/Admin/Presence.dart';
+import 'package:gestpersonnel/Screens/Admin/ListePresence.dart';
+import 'package:gestpersonnel/Screens/Admin/Personnel.dart';
 import 'package:gestpersonnel/Screens/Client/AddDemande.dart';
 import 'package:provider/provider.dart';
 import 'package:gestpersonnel/Providers/Services/Permissionss.dart';
@@ -53,7 +54,8 @@ class _BottomBarAdminState extends State<BottomBarAdmin>
           },
           children: <Widget>[
             HomeScreen(),
-            Presence(),
+            Personnel(),
+            Listepresence(),
             ListDemandes(),
           ],
         ),
@@ -75,8 +77,14 @@ class _BottomBarAdminState extends State<BottomBarAdmin>
             textAlign: TextAlign.center,
           ),
           BottomNavyBarItem(
+            icon: Icon(Icons.people_outline_outlined),
+            title: Text('Personnel'),
+            activeColor: Colors.green[400],
+            textAlign: TextAlign.center,
+          ),
+          BottomNavyBarItem(
             icon: Icon(Icons.plumbing),
-            title: Text('Présence'),
+            title: Text('Presence'),
             activeColor: Colors.green[400],
             textAlign: TextAlign.center,
           ),

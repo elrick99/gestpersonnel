@@ -1,7 +1,9 @@
 import 'dart:io';
+import 'package:gestpersonnel/Providers/Models/Absence.dart';
 import 'package:gestpersonnel/Providers/Models/Employe.dart';
 import 'package:gestpersonnel/Providers/Models/EmployerDB.dart';
 import 'package:gestpersonnel/Providers/Models/Permission.dart';
+import 'package:gestpersonnel/Providers/Models/Presence.dart';
 import 'package:gestpersonnel/Providers/Models/Superviseur.dart';
 import 'package:gestpersonnel/Providers/Models/SuperviseurBD.dart';
 import 'package:path/path.dart';
@@ -11,6 +13,8 @@ import 'package:sqflite/sqflite.dart';
 class DBProvider {
   List<Employe> _itemEmploye;
   List<SuperviseurDB> _itemSuperviseur = [];
+  List<Presence> _itemPresence = [];
+  List<Absence> _itemAbsence = [];
   List<Permission> _itemPermission = [];
 
   Employe _itemParent;
@@ -118,6 +122,20 @@ class DBProvider {
           'created_at TEXT,'
           'updated_at TEXT'
           ')');
+      await db.execute('CREATE TABLE Presence('
+          'id INTEGER PRIMARY KEY,'
+          'matricule TEXT NULL,'
+          'nom TEXT NULL,'
+          'prenoms TEXT NULL,'
+          'libMotif TEXT NULL'
+          ')');
+      await db.execute('CREATE TABLE Absence('
+          'id INTEGER PRIMARY KEY,'
+          'matricule TEXT NULL,'
+          'nom TEXT NULL,'
+          'prenoms TEXT NULL,'
+          'libMotif TEXT NULL'
+          ')');
     });
   }
 
@@ -130,6 +148,36 @@ class DBProvider {
 
     Employe list =
         ress.isNotEmpty ? ress.map((c) => Employe.fromJson(c)).first : null;
+
+    print("//////////LIST////////");
+    print(list);
+    return res;
+  }
+
+  // Insert Presence on database
+  Future<int> createPresence(Presence newParent) async {
+    await deleteAllPrensence();
+    final db = await database;
+    final res = await db.insert('Presence', newParent.toJson());
+    final ress = await db.rawQuery("SELECT * FROM Presence");
+
+    Presence list =
+        ress.isNotEmpty ? ress.map((c) => Presence.fromJson(c)).first : null;
+
+    print("//////////LIST////////");
+    print(list);
+    return res;
+  }
+
+  // Insert Presence on database
+  Future<int> createAbsence(Absence newParent) async {
+    await deleteAllAbsence();
+    final db = await database;
+    final res = await db.insert('Absence', newParent.toJson());
+    final ress = await db.rawQuery("SELECT * FROM Absence");
+
+    Absence list =
+        ress.isNotEmpty ? ress.map((c) => Absence.fromJson(c)).first : null;
 
     print("//////////LIST////////");
     print(list);
@@ -184,6 +232,22 @@ class DBProvider {
   Future<int> deleteAllEmploye() async {
     final db = await database;
     final res = await db.rawDelete('DELETE FROM Employe');
+
+    return res;
+  }
+
+  // Delete all Parents
+  Future<int> deleteAllAbsence() async {
+    final db = await database;
+    final res = await db.rawDelete('DELETE FROM Absence');
+
+    return res;
+  }
+
+  // Delete all Parents
+  Future<int> deleteAllPrensence() async {
+    final db = await database;
+    final res = await db.rawDelete('DELETE FROM Presence');
 
     return res;
   }
@@ -246,6 +310,30 @@ class DBProvider {
     return list;
   }
 
+  Future<List<Presence>> getAllPresence() async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM Presence");
+
+    List<Presence> list =
+        res.isNotEmpty ? res.map((c) => Presence.fromJson(c)).toList() : null;
+    _itemPresence = list;
+    print('////////// LISTE Presence /////////');
+    print(list);
+    return list;
+  }
+
+  Future<List<Absence>> getAllAbsence() async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM Absence");
+
+    List<Absence> list =
+        res.isNotEmpty ? res.map((c) => Absence.fromJson(c)).toList() : null;
+    _itemAbsence = list;
+    print('////////// LISTE Absence /////////');
+    print(list);
+    return list;
+  }
+
   Future<List<SuperviseurDB>> getAllSuperviseur() async {
     final db = await database;
     final res = await db.rawQuery("SELECT * FROM Surperviseur");
@@ -274,6 +362,8 @@ class DBProvider {
   List<Employe> get itemEmploye => _itemEmploye;
 
   List<Permission> get itemPermission => _itemPermission;
+  List<Presence> get itePresence => _itemPresence;
+  List<Absence> get iteAbsence => _itemAbsence;
   List<SuperviseurDB> get itemSuperviseur => _itemSuperviseur;
   // Moyenne get oneMoyenne => itemMoyenne;
 }

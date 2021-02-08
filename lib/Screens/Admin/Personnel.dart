@@ -5,15 +5,16 @@ import 'package:gestpersonnel/Providers/Models/EmployerDB.dart';
 import 'package:gestpersonnel/Providers/Models/Motif.dart';
 import 'package:gestpersonnel/Providers/Services/Employes.dart';
 import 'package:gestpersonnel/Providers/Services/Presences.dart';
+import 'package:gestpersonnel/Screens/Admin/ListePresence.dart';
 import 'package:provider/provider.dart';
 import 'package:gestpersonnel/Providers/Services/Motifs.dart';
 
-class Presence extends StatefulWidget {
+class Personnel extends StatefulWidget {
   @override
-  _PresenceState createState() => _PresenceState();
+  _PersonnelState createState() => _PersonnelState();
 }
 
-class _PresenceState extends State<Presence> {
+class _PersonnelState extends State<Personnel> {
   // did
   @override
   Widget build(BuildContext context) {
@@ -24,11 +25,20 @@ class _PresenceState extends State<Presence> {
     providerEmploye.postSuperviseurEmploye(
         matricule: DBProvider.db.itemSuperviseur[0].id);
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.replay_outlined),
+        onPressed: () {
+          setState(() {});
+          DBProvider.db.getAllEmploye();
+          DBProvider.db.getAllPresence();
+          DBProvider.db.getAllAbsence();
+        },
+      ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.green[400]),
         backgroundColor: Colors.white,
         title: Text(
-          "List de Présence",
+          "List de Personnel",
           style: TextStyle(color: Colors.green[400]),
         ),
       ),
@@ -144,32 +154,17 @@ class _AlertDialogeState extends State<AlertDialoge> {
 
   @override
   Widget build(BuildContext context) {
+    // print(resultabs);
     final providerProducts = Provider.of<Motifs>(context);
     final dataProduct = providerProducts.items;
     final providerPresence = Provider.of<Presences>(context);
     return (loaded == true)
         ? Scaffold(
             body: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(top: 100.0, left: 20, right: 20),
-                    child: Container(
-                      width: 200,
-                      child: Image(
-                          image: AssetImage("assets/images/logoeducas.png")),
-                    ),
-                  ),
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  Padding(padding: EdgeInsets.only(top: 20.0)),
-                  CircularProgressIndicator(
-                    backgroundColor: Colors.blue,
-                    valueColor: new AlwaysStoppedAnimation<Color>(Colors.amber),
-                    strokeWidth: 3,
-                  ),
-                ],
+              child: CircularProgressIndicator(
+                backgroundColor: Colors.green[400],
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 3,
               ),
             ),
           )
@@ -185,13 +180,12 @@ class _AlertDialogeState extends State<AlertDialoge> {
                     width: MediaQuery.of(context).size.width,
                     decoration: BoxDecoration(color: Colors.white),
                     child: Center(
-                      child: CircularProgressIndicator(
-                        backgroundColor: Colors.blue,
-                        valueColor:
-                            new AlwaysStoppedAnimation<Color>(Colors.amber),
-                        strokeWidth: 3,
-                      ),
-                    ),
+                        child: CircularProgressIndicator(
+                      backgroundColor: Colors.white,
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(Colors.green[400]),
+                      strokeWidth: 3,
+                    )),
                   )
                 : Container(
                     alignment: Alignment.center,
@@ -237,9 +231,14 @@ class _AlertDialogeState extends State<AlertDialoge> {
                                               .postArrive(
                                                   idMotif: widget.employe.id)
                                               .then((value) {
+                                            setState(() {
+                                              loaded = true;
+                                            });
+
                                             if (value == true) {
                                               print(value);
                                               setState(() {
+                                                loaded = false;
                                                 motif = false;
                                                 resultprs = true;
                                                 resultabs = false;
@@ -293,6 +292,7 @@ class _AlertDialogeState extends State<AlertDialoge> {
                                                     elevation: 16,
                                                     onChanged: (newValue) {
                                                       setState(() {
+                                                        resultabs = false;
                                                         print(newValue);
                                                         dropdownValue =
                                                             newValue;
@@ -312,7 +312,7 @@ class _AlertDialogeState extends State<AlertDialoge> {
                                                 ),
                                               ),
                                               SizedBox(
-                                                width: 5,
+                                                width: 2,
                                               ),
                                               Expanded(
                                                 child: MaterialButton(
@@ -330,9 +330,13 @@ class _AlertDialogeState extends State<AlertDialoge> {
                                                             idMotif:
                                                                 dropdownValue)
                                                         .then((value) {
+                                                      setState(() {
+                                                        loaded = true;
+                                                      });
                                                       if (value == true) {
                                                         print(value);
                                                         setState(() {
+                                                          loaded = false;
                                                           motif = false;
                                                           resultabs = true;
                                                         });
